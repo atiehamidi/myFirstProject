@@ -10,10 +10,8 @@ on:
 
 jobs:
   build:
-    name: build and push Docker image
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@actions
+      - uses: actions/checkout@master
         name: Check out code
 
       - uses: mr-smithers-excellent/docker-build-push@v3
