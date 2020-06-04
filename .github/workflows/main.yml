@@ -1,12 +1,7 @@
-# on:
-#   push:
-#     tags:
-#       - 'v*'
-
 on:
   push:
-    branches:
-      - actions
+    tags:
+      - 'v*'
 
 jobs:
   build:
