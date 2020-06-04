@@ -1,4 +1,5 @@
 # My First Website
+![](https://github.com/atiehamidi/myFirstProject/workflows/.github/workflows/releases.yml/badge.svg)
 
 ## github actions
 On new releases (tags) github automatically pushes new image to [pyguy/first-website](https://hub.docker.com/repository/docker/pyguy/first-website) docker repository.
