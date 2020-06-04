@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: first-website
+  name: first-website
+  namespace: atieh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: first-website
+  template:
+    metadata:
+      labels:
+        app: first-website
+    spec:
+      containers:
+      - image: pyguy/first-website:v0.1
+        imagePullPolicy: IfNotPresent
+        name: first-website
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: first-website-web-ui
+  namespace: atieh
+spec:
+  selector:
+    app: first-website
+  ports:
+  - name: web
+    port: 80
+    targetPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: first-website-web-ui
+  namespace: atieh
+spec:
+  rules:
+  - host: atiehamidi.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: first-website-web-ui
+          servicePort: web
