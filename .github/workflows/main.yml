@@ -11,7 +11,7 @@ jobs:
       DOCKER_IMAGE: pyguy/first-website
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      DOCKER_TARGET_PLATFORM: linux/arm/v7
+      DOCKER_TARGET_PLATFORM: linux/amd64,linux/arm64,linux/arm/v7
     steps:
     - name: Checkout the code
       uses: actions/checkout@v1
@@ -25,7 +25,7 @@ jobs:
       run: |
         echo ::set-output name=docker_platform::${DOCKER_TARGET_PLATFORM}
         echo ::set-output name=docker_image::${DOCKER_REGISTRY}/${DOCKER_IMAGE}
-        echo ::set-output name=version::${GITHUB_REF#refs/*/}
+        echo ::set-output name=release_version::${GITHUB_REF#refs/*/}
     - name: Docker Login
       if: success()
       run: |
@@ -35,6 +35,6 @@ jobs:
       run: |
         docker buildx build \
         --platform ${{ steps.prepare.outputs.docker_platform }} \
-        --tag ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }} \
+        --tag ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.release_version }} \
         --file ./Dockerfile \
         --output type=image,push=true .
